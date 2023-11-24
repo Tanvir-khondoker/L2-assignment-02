@@ -1,5 +1,5 @@
-import { Schema, model, connect } from 'mongoose';
-import { IUser, IOrders, IFullName, IAddress } from './user.interface';
+import { Schema, model  } from 'mongoose';
+import { IUser,  IFullName, IAddress } from './user.interface';
 
 const ordersSchema = new Schema({
   productName: { type: String },
@@ -18,6 +18,7 @@ const addressSchema = new Schema<IAddress>({
   country: { type: String },
 });
 
+// user schema here 
 const userSchema = new Schema<IUser>({
   userId: { type: Number, required: true },
   username: { type: String, required: true },
@@ -32,3 +33,8 @@ const userSchema = new Schema<IUser>({
 });
 
 
+// model here 
+
+const User = model<IUser>('User', userSchema);
+
+export default User;
