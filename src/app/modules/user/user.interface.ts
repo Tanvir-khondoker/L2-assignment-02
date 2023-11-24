@@ -1,4 +1,3 @@
-import { Schema, model, connect } from 'mongoose';
 
 export type IOrders = {
   productName: string;
@@ -25,7 +24,7 @@ export type IUser = {
   age: number;
   email: string;
   isActive: boolean;
-  hobbies: string[];
+  hobbies?: string[];
   address: IAddress;
   orders?: IOrders;
 };
