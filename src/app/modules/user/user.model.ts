@@ -59,6 +59,12 @@ const userSchema = new Schema<IUser>({
     required: true,
   },
   orders: [ordersSchema],
+},{
+  toJSON: {
+    transform: function (doc, ret) {
+      delete ret.password;
+    },
+  }
 });
 
 userSchema.pre('save', async function (next) {
@@ -71,6 +77,9 @@ userSchema.pre('save', async function (next) {
   );
   next();
 });
+
+
+
 
 // model here
 const UserModel = model<IUser>('User', userSchema);

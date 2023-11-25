@@ -11,6 +11,5 @@ app.use(cors());
 // application routes
 app.use('/api/users', UserRoutes);
 
-// app.get('/', getAController);
 
 export default app;

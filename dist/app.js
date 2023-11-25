@@ -11,6 +11,5 @@ const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 // application routes
-app.use('/api', user_route_1.UserRoutes);
-// app.get('/', getAController);
+app.use('/api/users', user_route_1.UserRoutes);
 exports.default = app;
