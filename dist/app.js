@@ -12,4 +12,7 @@ app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 // application routes
 app.use('/api/users', user_route_1.UserRoutes);
+app.get('/', (req, res) => {
+    res.json({ message: "assignment-2 app's base route is running" });
+});
 exports.default = app;
