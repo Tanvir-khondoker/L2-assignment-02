@@ -1,40 +1,78 @@
-import { Schema, model  } from 'mongoose';
-import { IUser,  IFullName, IAddress } from './user.interface';
+import { Schema, model } from 'mongoose';
+import { IUser, IFullName, IAddress } from './user.interface';
+import bcrypt from 'bcrypt';
+import config from '../../config';
 
 const ordersSchema = new Schema({
-  productName: { type: String },
-  price: { type: Number },
-  quantity: { type: Number },
+  productName: String,
+  price: Number,
+  quantity: Number,
 });
 
 const fullNameSchema = new Schema<IFullName>({
-  firstName: { type: String },
-  lastName: { type: String },
+  firstName: String,
+  lastName: String,
 });
 
 const addressSchema = new Schema<IAddress>({
-  street: { type: String },
-  city: { type: String },
-  country: { type: String },
+  street: String,
+  city: String,
+  country: String,
 });
 
-// user schema here 
+// user schema here
 const userSchema = new Schema<IUser>({
-  userId: { type: Number, required: true },
-  username: { type: String, required: true },
-  password: { type: String, required: true },
-  fullName: { type: fullNameSchema, required: true },
-  age: { type: Number, required: true },
-  email: { type: String, required: true },
-  isActive: { type: Boolean, required: true },
-  hobbies: { type: [String] },
-  address: { type: addressSchema, required: true },
-  orders: { type: [ordersSchema] },
+  userId: {
+    type: Number,
+    required: true,
+    unique: true,
+  },
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  fullName: {
+    type: fullNameSchema,
+    required: true,
+  },
+  age: {
+    type: Number,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  isActive: {
+    type: Boolean,
+    required: true,
+  },
+  hobbies: [String],
+  address: {
+    type: addressSchema,
+    required: true,
+  },
+  orders: [ordersSchema],
 });
 
+userSchema.pre('save', async function (next) {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  const user = this;
+  //  hashing password and save into db
+  user.password = await bcrypt.hash(
+    user.password,
+    Number(config.bcrypt_salt_rounds),
+  );
+  next();
+});
 
-// model here 
-
+// model here
 const UserModel = model<IUser>('User', userSchema);
 
 export default UserModel;
