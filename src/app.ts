@@ -12,7 +12,7 @@ app.use(cors());
 app.use('/api/users', UserRoutes);
 
 app.get('/', (req: Request, res: Response) => {
-    res.json({ message: "assignment-2 app's base route is running" });
+    res.json({ message: "assignment-2 app's home route is running" });
   });
   
 
