@@ -26,11 +26,13 @@ const userSchema = new Schema<IUser>({
     type: Number,
     required: true,
     unique: true,
+    message: 'User with this userId already exists.',
   },
   username: {
     type: String,
     required: true,
     unique: true,
+    message: 'This username is already in use. Please choose a different one.',
   },
   password: {
     type: String,
@@ -48,6 +50,7 @@ const userSchema = new Schema<IUser>({
     type: String,
     required: true,
     unique: true,
+    message: 'This email is already in use. Please choose a different one.',
   },
   isActive: {
     type: Boolean,
@@ -59,13 +62,14 @@ const userSchema = new Schema<IUser>({
     required: true,
   },
   orders: [ordersSchema],
-},{
+}, {
   toJSON: {
     transform: function (doc, ret) {
       delete ret.password;
     },
   }
 });
+
 
 userSchema.pre('save', async function (next) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias

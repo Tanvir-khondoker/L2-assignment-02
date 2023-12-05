@@ -2,9 +2,10 @@ import { Request, Response } from 'express';
 import { UserServices } from './user.service';
 import userNameValidationSchema from './user.validation';
 
+
 const createUser = async (req: Request, res: Response) => {
   try {
-    const { user: userData } = req.body;
+    const  userData  = req.body;
 
     // data validation using zod
     const zodParsedData = userNameValidationSchema.parse(userData);
@@ -21,6 +22,8 @@ const createUser = async (req: Request, res: Response) => {
     console.log(err);
   }
 };
+
+
 
 const getAllUsers = async (req: Request, res: Response) => {
   try {
